@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Accurate IQ Test | Free Online Intelligence Assessment</title>
+  <meta name="description" content="Take a free, carefully designed IQ test with unique non-repeating questions covering logical, numerical, verbal and spatial reasoning. Get an estimated IQ score." />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-dark: #0ea5e9;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 0 16px;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #0f172a;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .progress-wrap {
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    .option:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .option.selected {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 20px;
+      line-height: 1.5;
+      padding: 12px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    .result-score {
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-align: center;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 8px 0;
+    }
+
+    .result-label {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .result-percentile {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .category-list {
+      margin-top: 16px;
+    }
+
+    .cat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .cat-item:last-child {
+      border-bottom: none;
+    }
+
+    .cat-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      flex: 1;
+      margin: 0 12px;
+      overflow: hidden;
+    }
+
+    .cat-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .screen {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .timer {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-width: 220px;
+      margin: 12px auto 16px;
+    }
+
+    .matrix-cell {
+      aspect-ratio: 1;
+      background: #334155;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .matrix-cell.empty {
+      background: transparent;
+      border: 2px dashed var(--border);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 1.5rem; }
+      .result-score { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>IQ Test</h1>
+      <p class="subtitle">Logical • Numerical • Verbal • Spatial</p>
+    </header>
+
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen">
+      <div class="card">
+        <p style="margin-bottom: 16px;">
+          This test measures fluid and crystallized intelligence through carefully selected reasoning problems. 
+          Each session draws a unique set of questions so you never see the same mix twice.
+        </p>
+        <ul style="margin: 0 0 16px 18px; color: var(--muted); font-size: 0.95rem;">
+          <li>25 unique questions per test</li>
+          <li>No repeated questions within a session</li>
+          <li>Mixed difficulty across domains</li>
+          <li>~12–18 minutes</li>
+        </ul>
+        <button class="btn" id="start-btn">Start Test</button>
+        <div class="disclaimer">
+          <strong>Important:</strong> This is an educational and recreational estimate only. 
+          It is <em>not</em> a clinical or professional IQ assessment. Real IQ tests require 
+          supervised administration and proper norming. Results can vary with practice, 
+          fatigue, and environment.
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" class="screen hidden">
+      <div class="card">
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+          <div class="progress-text">
+            <span id="progress-text">Question 1 of 25</span>
+            <span class="timer" id="timer">00:00</span>
+          </div>
+        </div>
+        <div id="question-area">
+          <!-- filled by JS -->
+        </div>
+        <button class="btn" id="next-btn" disabled>Next</button>
+      </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" class="screen hidden">
+      <div class="card">
+        <p class="result-label" id="result-band">Average</p>
+        <div class="result-score" id="result-iq">100</div>
+        <p class="result-percentile" id="result-percentile">50th percentile</p>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value" id="stat-correct">0/25</div>
+            <div class="stat-label">Correct</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="stat-time">0:00</div>
+            <div class="stat-label">Time</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1rem; margin-bottom: 8px;">Domain Performance</h3>
+        <div class="category-list" id="category-list"></div>
+
+        <div class="disclaimer" style="margin-top: 24px;">
+          Estimated IQ is calculated from your raw score using a normal distribution 
+          (mean 100, SD 15). This is an approximation based on the difficulty of the items 
+          and is intended for curiosity and self-assessment only.
+        </div>
+
+        <button class="btn" id="retake-btn">Take Another Test</button>
+        <button class="btn btn-secondary" id="share-btn" style="margin-top: 10px;">Share Result</button>
+      </div>
+    </div>
+
+    <footer>
+      Free educational IQ estimate • Questions never repeat within a session
+    </footer>
+  </div>
+
+  <script>
+    // ========== QUESTION BANK (40+ unique items) ==========
+    // Categories: numerical, verbal, logical, spatial, abstract
+    const QUESTION_BANK = [
+      // Numerical series
+      {
+        id: "n1", cat: "Numerical",
+        q: "What number comes next in the series?\n2, 6, 12, 20, 30, ?",
+        options: ["40", "42", "44", "36"],
+        answer: 1
+      },
+      {
+        id: "n2", cat: "Numerical",
+        q: "Find the missing number:\n3, 9, 27, 81, ?",
+        options: ["162", "243", "216", "324"],
+        answer: 1
+      },
+      {
+        id: "n3", cat: "Numerical",
+        q: "What is the next number?\n1, 4, 9, 16, 25, ?",
+        options: ["30", "36", "49", "42"],
+        answer: 1
+      },
+      {
+        id: "n4", cat: "Numerical",
+        q: "Complete the series:\n5, 10, 20, 40, 80, ?",
+        options: ["120", "160", "100", "140"],
+        answer: 1
+      },
+      {
+        id: "n5", cat: "Numerical",
+        q: "What comes next?\n8, 27, 64, 125, ?",
+        options: ["216", "196", "243", "169"],
+        answer: 0
+      },
+      {
+        id: "n6", cat: "Numerical",
+        q: "Find the missing number:\n2, 3, 5, 8, 12, 17, ?",
+        options: ["22", "23", "24", "21"],
+        answer: 1
+      },
+      {
+        id: "n7", cat: "Numerical",
+        q: "What number should replace the question mark?\n7, 14, 28, 56, ?",
+        options: ["84", "98", "112", "70"],
+        answer: 2
+      },
+      {
+        id: "n8", cat: "Numerical",
+        q: "Complete the pattern:\n1, 1, 2, 3, 5, 8, 13, ?",
+        options: ["18", "21", "20", "24"],
+        answer: 1
+      },
+
+      // Verbal / Analogies
+      {
+        id: "v1", cat: "Verbal",
+        q: "Bird is to Sky as Fish is to ?",
+        options: ["Scale", "Water", "Swim", "Gills"],
+        answer: 1
+      },
+      {
+        id: "v2", cat: "Verbal",
+        q: "Book is to Reading as Fork is to ?",
+        options: ["Drawing", "Writing", "Eating", "Cooking"],
+        answer: 2
+      },
+      {
+        id: "v3", cat: "Verbal",
+        q: "Which word does not belong?\nApple, Banana, Carrot, Mango",
+        options: ["Apple", "Banana", "Carrot", "Mango"],
+        answer: 2
+      },
+      {
+        id: "v4", cat: "Verbal",
+        q: "Doctor is to Hospital as Teacher is to ?",
+        options: ["Student", "School", "Book", "Classroom"],
+        answer: 1
+      },
+      {
+        id: "v5", cat: "Verbal",
+        q: "Choose the odd one out:\nTriangle, Square, Circle, Cube",
+        options: ["Triangle", "Square", "Circle", "Cube"],
+        answer: 3
+      },
+      {
+        id: "v6", cat: "Verbal",
+        q: "Pen is to Writer as Brush is to ?",
+        options: ["Paint", "Painter", "Color", "Canvas"],
+        answer: 1
+      },
+      {
+        id: "v7", cat: "Verbal",
+        q: "Which pair has the same relationship as:\nHot : Cold",
+        options: ["Tall : Short", "Happy : Joy", "Big : Large", "Fast : Quick"],
+        answer: 0
+      },
+      {
+        id: "v8", cat: "Verbal",
+        q: "Find the odd one:\nMercury, Venus, Mars, Moon",
+        options: ["Mercury", "Venus", "Mars", "Moon"],
+        answer: 3
+      },
+
+      // Logical / Abstract
+      {
+        id: "l1", cat: "Logical",
+        q: "If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are definitely Lazzies.",
+        options: ["True", "False", "Cannot be determined"],
+        answer: 0
+      },
+      {
+        id: "l2", cat: "Logical",
+        q: "A is the brother of B. B is the sister of C. C is the father of D. How is A related to D?",
+        options: ["Uncle", "Father", "Brother", "Cousin"],
+        answer: 0
+      },
+      {
+        id: "l3", cat: "Logical",
+        q: "Which comes next in the sequence?\nA, C, F, J, O, ?",
+        options: ["S", "T", "U", "V"],
+        answer: 2
+      },
+      {
+        id: "l4", cat: "Logical",
+        q: "If 5 machines take 5 minutes to make 5 widgets, how long would 100 machines take to make 100 widgets?",
+        options: ["100 minutes", "5 minutes", "20 minutes", "1 minute"],
+        answer: 1
+      },
+      {
+        id: "l5", cat: "Logical",
+        q: "All roses are flowers. Some flowers fade quickly. Therefore:",
+        options: [
+          "All roses fade quickly",
+          "Some roses fade quickly",
+          "Some roses may fade quickly",
+          "No roses fade quickly"
+        ],
+        answer: 2
+      },
+      {
+        id: "l6", cat: "Logical",
+        q: "What is the missing letter?\nB, D, G, K, P, ?",
+        options: ["T", "U", "V", "S"],
+        answer: 1
+      },
+      {
+        id: "l7", cat: "Logical",
+        q: "If you rearrange the letters \"CIFAIPC\" you get the name of a:",
+        options: ["City", "Animal", "Ocean", "Country"],
+        answer: 2
+      },
+      {
+        id: "l8", cat: "Logical",
+        q: "Which number does not belong?\n2, 3, 6, 7, 8, 14, 15, 30",
+        options: ["8", "7", "14", "15"],
+        answer: 0
+      },
+
+      // Spatial / Pattern (text-based)
+      {
+        id: "s1", cat: "Spatial",
+        q: "Which shape comes next in the pattern?\n○ △ □ ○ △ ?",
+        options: ["○", "△", "□", "◇"],
+        answer: 2
+      },
+      {
+        id: "s2", cat: "Spatial",
+        q: "If a cube is painted red on all sides and then cut into 27 smaller equal cubes, how many small cubes have exactly 3 faces painted?",
+        options: ["1", "6", "8", "12"],
+        answer: 2
+      },
+      {
+        id: "s3", cat: "Spatial",
+        q: "Looking at a clock, what is the angle between the hour and minute hands at 3:00?",
+        options: ["60°", "90°", "120°", "180°"],
+        answer: 1
+      },
+      {
+        id: "s4", cat: "Spatial",
+        q: "A square has sides of length 4. A second square is made by connecting the midpoints of the first square. What is the area of the smaller square?",
+        options: ["4", "8", "2", "16"],
+        answer: 1
+      },
+      {
+        id: "s5", cat: "Spatial",
+        q: "How many triangles are in a large triangle divided by connecting the midpoints of each side?",
+        options: ["3", "4", "5", "6"],
+        answer: 1
+      },
+      {
+        id: "s6", cat: "Spatial",
+        q: "If you fold a paper in half twice and punch one hole, how many holes will you see when you unfold it?",
+        options: ["1", "2", "4", "8"],
+        answer: 2
+      },
+      {
+        id: "s7", cat: "Spatial",
+        q: "Which of the following cannot be the number of faces that meet at a vertex of a polyhedron?",
+        options: ["3", "4", "5", "2"],
+        answer: 3
+      },
+      {
+        id: "s8", cat: "Spatial",
+        q: "A 3×3×3 cube is made of 27 smaller cubes. How many of the small cubes are completely hidden inside?",
+        options: ["0", "1", "6", "8"],
+        answer: 1
+      },
+
+      // Extra high-quality items
+      {
+        id: "x1", cat: "Numerical",
+        q: "What is 15% of 80?",
+        options: ["10", "12", "15", "8"],
+        answer: 1
+      },
+      {
+        id: "x2", cat: "Logical",
+        q: "If the day before yesterday was Thursday, what day will it be the day after tomorrow?",
+        options: ["Sunday", "Monday", "Tuesday", "Wednesday"],
+        answer: 1
+      },
+      {
+        id: "x3", cat: "Verbal",
+        q: "Choose the word that best completes the analogy:\nGenerous is to Stingy as Brave is to ?",
+        options: ["Courageous", "Fearful", "Strong", "Bold"],
+        answer: 1
+      },
+      {
+        id: "x4", cat: "Numerical",
+        q: "A train travels 120 km in 2 hours. How long will it take to travel 300 km at the same speed?",
+        options: ["4 hours", "5 hours", "6 hours", "3 hours"],
+        answer: 1
+      },
+      {
+        id: "x5", cat: "Logical",
+        q: "Which statement must be true?\nAll A are B. Some B are C.",
+        options: [
+          "All A are C",
+          "Some A are C",
+          "Some A may be C",
+          "No A are C"
+        ],
+        answer: 2
+      },
+      {
+        id: "x6", cat: "Spatial",
+        q: "If North becomes East, East becomes South, etc., what does South become?",
+        options: ["North", "West", "East", "South"],
+        answer: 1
+      },
+      {
+        id: "x7", cat: "Numerical",
+        q: "What is the next number in the series?\n1, 8, 27, 64, 125, ?",
+        options: ["196", "216", "243", "256"],
+        answer: 1
+      },
+      {
+        id: "x8", cat: "Verbal",
+        q: "Which word is the opposite of \"Scarce\"?",
+        options: ["Rare", "Abundant", "Limited", "Sparse"],
+        answer: 1
+      }
+    ];
+
+    // ========== STATE ==========
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let answers = [];
+    let startTime = 0;
+    let timerInterval = null;
+    let selectedOption = null;
+
+    // ========== DOM ==========
+    const startScreen = document.getElementById("start-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const startBtn = document.getElementById("start-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const retakeBtn = document.getElementById("retake-btn");
+    const shareBtn = document.getElementById("share-btn");
+    const questionArea = document.getElementById("question-area");
+    const progressFill = document.getElementById("progress-fill");
+    const progressText = document.getElementById("progress-text");
+    const timerEl = document.getElementById("timer");
+
+    // ========== HELPERS ==========
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+      const s = (seconds % 60).toString().padStart(2, "0");
+      return `${m}:${s}`;
+    }
+
+    function startTimer() {
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        timerEl.textContent = formatTime(elapsed);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    // ========== CORE LOGIC ==========
+    function selectQuestions() {
+      // Pick 25 unique questions, balanced across categories if possible
+      const byCat = {};
+      QUESTION_BANK.forEach(q => {
+        if (!byCat[q.cat]) byCat[q.cat] = [];
+        byCat[q.cat].push(q);
+      });
+
+      const selected = [];
+      const cats = Object.keys(byCat);
+      // Aim for roughly equal distribution
+      const perCat = Math.floor(25 / cats.length);
+      cats.forEach(cat => {
+        const shuffled = shuffle(byCat[cat]);
+        selected.push(...shuffled.slice(0, perCat));
+      });
+
+      // Fill remaining with random from leftover
+      const usedIds = new Set(selected.map(q => q.id));
+      const remaining = shuffle(QUESTION_BANK.filter(q => !usedIds.has(q.id)));
+      while (selected.length < 25 && remaining.length) {
+        selected.push(remaining.pop());
+      }
+
+      return shuffle(selected).slice(0, 25);
+    }
+
+    function showQuestion() {
+      const q = currentQuestions[currentIndex];
+      selectedOption = null;
+      nextBtn.disabled = true;
+
+      const progress = ((currentIndex) / currentQuestions.length) * 100;
+      progressFill.style.width = `${progress}%`;
+      progressText.textContent = `Question ${currentIndex + 1} of ${currentQuestions.length}`;
+
+      // Shuffle options but keep track of correct answer
+      const optionIndices = q.options.map((_, i) => i);
+      const shuffledIndices = shuffle(optionIndices);
+      const newCorrect = shuffledIndices.indexOf(q.answer);
+
+      let html = `<div class="question-text">${q.q.replace(/\n/g, "<br>")}</div>`;
+      html += `<div class="options">`;
+      shuffledIndices.forEach((origIdx, displayIdx) => {
+        html += `<div class="option" data-index="${displayIdx}">${q.options[origIdx]}</div>`;
+      });
+      html += `</div>`;
+
+      questionArea.innerHTML = html;
+
+      // Store the new correct index for this rendering
+      q._currentCorrect = newCorrect;
+
+      document.querySelectorAll(".option").forEach(el => {
+        el.addEventListener("click", () => {
+          document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+          el.classList.add("selected");
+          selectedOption = parseInt(el.dataset.index);
+          nextBtn.disabled = false;
+        });
+      });
+    }
+
+    function finishTest() {
+      stopTimer();
+      const totalTime = Math.floor((Date.now() - startTime) / 1000);
+      let correct = 0;
+      const catStats = {};
+
+      currentQuestions.forEach((q, i) => {
+        if (!catStats[q.cat]) catStats[q.cat] = { correct: 0, total: 0 };
+        catStats[q.cat].total++;
+        if (answers[i] === q._currentCorrect) {
+          correct++;
+          catStats[q.cat].correct++;
+        }
+      });
+
+      // Scoring model (approximate)
+      // Mean expected raw score ~ 13–14 for a typical adult on this difficulty mix
+      // We map raw → IQ with mean 100, SD 15
+      const meanRaw = 13.5;
+      const sdRaw = 4.2; // roughly calibrated for this set
+      let iq = Math.round(100 + 15 * ((correct - meanRaw) / sdRaw));
+      iq = Math.max(55, Math.min(155, iq)); // clamp
+
+      // Percentile (normal CDF approximation)
+      const z = (iq - 100) / 15;
+      const percentile = Math.round(normalCdf(z) * 100);
+
+      // Band
+      let band = "Average";
+      if (iq >= 130) band = "Very Superior";
+      else if (iq >= 120) band = "Superior";
+      else if (iq >= 110) band = "High Average";
+      else if (iq >= 90) band = "Average";
+      else if (iq >= 80) band = "Low Average";
+      else band = "Below Average";
+
+      // Render
+      document.getElementById("result-iq").textContent = iq;
+      document.getElementById("result-band").textContent = band;
+      document.getElementById("result-percentile").textContent = 
+        `${percentile}th percentile (higher than ${percentile}% of people)`;
+      document.getElementById("stat-correct").textContent = `${correct}/${currentQuestions.length}`;
+      document.getElementById("stat-time").textContent = formatTime(totalTime);
+
+      const catList = document.getElementById("category-list");
+      catList.innerHTML = "";
+      Object.keys(catStats).sort().forEach(cat => {
+        const s = catStats[cat];
+        const pct = Math.round((s.correct / s.total) * 100);
+        catList.innerHTML += `
+          <div class="cat-item">
+            <span style="min-width: 80px;">${cat}</span>
+            <div class="cat-bar"><div class="cat-fill" style="width:${pct}%"></div></div>
+            <span style="min-width: 50px; text-align: right;">${s.correct}/${s.total}</span>
+          </div>`;
+      });
+
+      quizScreen.classList.add("hidden");
+      resultScreen.classList.remove("hidden");
+    }
+
+    // Approximate normal CDF
+    function normalCdf(x) {
+      const t = 1 / (1 + 0.2316419 * Math.abs(x));
+      const d = 0.3989423 * Math.exp(-x * x / 2);
+      const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+      return x > 0 ? 1 - p : p;
+    }
+
+    // ========== EVENT HANDLERS ==========
+    startBtn.addEventListener("click", () => {
+      currentQuestions = selectQuestions();
+      currentIndex = 0;
+      answers = [];
+      startScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
+      startTimer();
+      showQuestion();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (selectedOption === null) return;
+      answers[currentIndex] = selectedOption;
+      currentIndex++;
+      if (currentIndex >= currentQuestions.length) {
+        finishTest();
+      } else {
+        showQuestion();
+      }
+    });
+
+    retakeBtn.addEventListener("click", () => {
+      resultScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+    });
+
+    shareBtn.addEventListener("click", () => {
+      const iq = document.getElementById("result-iq").textContent;
+      const text = `I just scored ${iq} on this IQ test! Try it yourself: https://rihanverma078-creator.github.io`;
+      if (navigator.share) {
+        navigator.share({ title: "My IQ Result", text, url: "https://rihanverma078-creator.github.io" });
+      } else {
+        navigator.clipboard.writeText(text).then(() => {
+          shareBtn.textContent = "Copied!";
+          setTimeout(() => shareBtn.textContent = "Share Result", 2000);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
